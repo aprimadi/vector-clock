@@ -14,7 +14,7 @@ go get -u github.com/aprimadi/vector-clock
 
 ## Usage
 
-```
+```go
 package main
 
 import (
@@ -26,22 +26,22 @@ func main() {
   v1 := vclock.VClock{}
 
   // Increment vector clock for a given process id
-  v1.tick("pid1")     // v1 = VClock{"pid1": 1}
+  v1.Tick("pid1")     // v1 = VClock{"pid1": 1}
 
   // Create a copy of v1 and advance clock for pid2
   v2 := v1.Copy()
-  v2.tick("pid2")     // v2 = VClock{"pid1": 1, "pid2": 1}
+  v2.Tick("pid2")     // v2 = VClock{"pid1": 1, "pid2": 1}
 
   // Create a copy of v1 and advance clock for pid3
   v3 := v1.Copy()
-  v3.tick("pid3")     // v3 = VClock{"pid1": 1, "pid3": 1}
+  v3.Tick("pid3")     // v3 = VClock{"pid1": 1, "pid3": 1}
 
   // Use relation to find out the relation of two vector clocks
-  r1 := v2.Relation(v3) // Conflict
-  r2 := v2.Relation(v1) // Descendant
+  v2.Relation(v3)     // Conflict
+  v2.Relation(v1)     // Descendant
 
   // Merge two vector clocks
-  v4 := v2.Merge(v3)  // v4 = VClock{"pid1": 1, "pid2": 1, "pid3": 1}
+  v2.Merge(v3)        // VClock{"pid1": 1, "pid2": 1, "pid3": 1}
 }
 ```
 
